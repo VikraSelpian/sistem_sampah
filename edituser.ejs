@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Data User</title>
+    <link rel="stylesheet" href="style/edit.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <style>
+        
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f8f5;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    min-height: 0;
+}
+
+header {
+    background-color: #2e8b57;
+    padding: 10px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.logout-button {
+    color: white;
+    text-decoration: none;
+    background-color: #ff5c5c;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.menu {
+    width: 20%;
+    background-color: #4caf50;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #388e3c;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: #66bb6a;
+}
+
+.main-content {
+    width: 80%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #e0f2f1;
+}
+
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-row div {
+    width: 48%;
+}
+
+form label {
+    display: block;
+    margin-bottom: 1px;
+    font-weight: bold;
+}
+
+form input, form textarea, form select {
+    width: 80%; /* Mengubah lebar menjadi 100% */
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 1px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 1px;
+    cursor: pointer;
+    width: 80%; /* Mengubah lebar menjadi 100% */
+}
+
+button:hover {
+    background-color: #388e3c;
+}
+
+footer {
+    background-color: #2e8b57;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Media Queries for small devices */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .menu {
+        width: 100%;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-row div {
+        width: 100%;
+    }
+}
+
+.profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        /* Profile dropdown styling */
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 120px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 4px;
+        }
+        
+        .dropdown-content a {
+            color: black;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        
+        /* Show dropdown on hover or click */
+        .profile-dropdown:hover .dropdown-content,
+        .profile-dropdown:focus-within .dropdown-content {
+            display: block;
+        }
+
+
+
+    </style>
+     <header>
+        <h1>Smart Trash Bin</h1>
+        <div class="user-info">
+            <!-- Profile picture with dropdown -->
+            <div class="profile-dropdown">
+                <img src="/uploads/<%= user.profile_picture %>" alt="Profile Picture" class="profile-pic">
+                <div class="dropdown-content">
+                    <a href="/settings/<%= user.id %>">Settings</a>
+                    <a href="/logout" class="logout-button">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <!-- Sidebar Menu -->
+        <div class="menu">
+            <a href="/admin"><i class="fas fa-home"></i> Halaman Utama</a>
+            <a href="/status"><i class="fas fa-tachometer-alt"></i> Status</a>
+            <a href="/lokasi"><i class="fas fa-map-marker-alt"></i> Lokasi</a>
+            <a href="/history"><i class="fas fa-history"></i> History</a>
+            <a href="/users"><i class="fas fa-users"></i> Pengguna</a>
+        </div>
+
+        <!-- Content Area -->
+        <div id="content-area" class="main-content">
+            <h2>Edit User</h2>
+            <form action="/update-user/<%= user.id %>" method="POST">
+                <div class="form-row">
+                    <div>
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" value="<%= user.username %>" required>
+                    </div>
+                    <div>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" value="<%= user.email %>" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div>
+                        <label for="no_hp">No HP:</label>
+                        <input type="tel" id="no_hp" name="no_hp" value="<%= user.no_hp %>" required>
+                    </div>
+                    <div>
+                        <label for="alamat">Alamat:</label>
+                        <textarea id="alamat" name="alamat" rows="4" required><%= user.alamat %></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div>
+                        <label for="role">Role:</label>
+                        <select id="role" name="role" required>
+                            <option value="petugas" <%= user.role === 'petugas' ? 'selected' : '' %>>Petugas Kebersihan</option>
+                            <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+                            <option value="guru" <%= user.role === 'guru' ? 'selected' : '' %>>Guru</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label>Password Baru (Opsional):</label>
+                    <input type="password" name="password" placeholder="Isi jika ingin mengganti password">
+                </div>
+
+                <button type="submit">Perbarui User</button>
+            </form>
+        </div>
+    </div>
+    <footer>
+        &copy; 2024 Smart Trash Bin. All Rights Reserved.
+    </footer>
+</body>
+</html>

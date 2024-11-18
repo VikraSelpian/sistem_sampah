@@ -1,0 +1,25 @@
+<header class="navbar">
+    <h1>Smart Trash Bin</h1>
+    <div class="user-info">
+        <% if (user) { %>
+<<<<<<< HEAD
+            <!-- Display the welcome message and profile dropdown -->
+            <p>Selamat datang, <strong><%= user.username %></strong> (<strong><%= user.role %></strong>)</p>
+            <div class="profile-dropdown">
+                <img src="/uploads/<%= user.profile_picture %>" alt="Profile Picture" class="profile-pic">
+                <div class="dropdown-content">
+                    <a href="/settings/<%= user.id %>">Settings</a>
+                    <a href="/logout">Log Out</a>
+                </div>
+            </div>
+        <% } else { %>
+            <a href="/login" class="login-button">Login</a>
+=======
+            <p>Selamat datang, <strong><%= user.username %></strong> (<strong><%= user.role %></strong>)</p>
+            <a href="/logout" class="logout-button">Log Out</a>
+        <% } else { %>
+            <a href="/login" class="logout-button">Login</a>
+>>>>>>> 36bcbe82082944d1d3967880ef065dee6b44917d
+        <% } %>
+    </div>
+</header>

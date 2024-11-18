@@ -1,0 +1,238 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f8f5;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* User Info Styles */
+.user-info {
+    display: flex; /* Menggunakan flexbox untuk menyusun elemen secara horizontal */
+    align-items: center; /* Menjaga elemen di tengah secara vertikal */
+}
+
+/* Profile picture styling */
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Dropdown content styling */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show dropdown on hover or click */
+.profile-dropdown:hover .dropdown-content,
+.profile-dropdown:focus-within .dropdown-content {
+    display: block;
+}
+
+
+.container {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    min-height: 0;
+}
+
+header {
+    background-color: #2e8b57;
+    padding: 10px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+
+.logout-button {
+    color: white;
+    text-decoration: none;
+    background-color: #ff5c5c;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.menu {
+    width: 20%;
+    background-color: #4caf50;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #388e3c;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.menu a:hover {
+    background-color: #66bb6a;
+}
+
+.main-content {
+    width: 80%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #e0f2f1;
+    overflow-y: auto; /* Enable scrolling */
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* 1 column layout */
+    grid-gap: 20px;
+}
+
+.dashboard {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 400px; /* Set maximum height for the dashboard */
+    overflow-y: auto; /* Enable scrolling within the dashboard */
+}
+
+.chart-wrapper {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.dashboard canvas {
+    width: 120px; /* Fixed size for canvas */
+    height: 120px; /* Fixed size for canvas */
+}
+
+.status-container {
+    margin-top: 10px; /* Space between chart and status info */
+    text-align: center;
+}
+
+.status-container p {
+    margin: 5px 0; /* Spacing between lines of text */
+}
+
+footer {
+    background-color: #2e8b57;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Tabel histori */
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.history-table th, .history-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.history-table th {
+    background-color: #4caf50;
+    color: white;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: right; /* Align ke kanan */
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #388e3c;
+}
+
+/* Print Button */
+.print-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    float: right; /* Agar tombol berada di kanan atas */
+}
+
+.print-button:hover {
+    background-color: #388e3c;
+}
+
+/* Media Queries for small devices */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .menu {
+        width: 100%;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr; /* 1 column for small screens */
+    }
+}

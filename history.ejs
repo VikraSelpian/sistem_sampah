@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Smart Trash Bin</h1>
+        <div class="user-info">
+            <!-- Profile picture with dropdown -->
+            <div class="profile-dropdown">
+                <img src="/uploads/<%= user.profile_picture %>" alt="Profile Picture" class="profile-pic">
+                <div class="dropdown-content">
+                    <a href="/settings/<%= user.id %>">Settings</a>
+                    <a href="/logout" class="logout-button">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <!-- Sidebar Menu -->
+        <div class="menu">
+            <a href="/admin"><i class="fas fa-home"></i> Halaman Utama</a>
+            <a href="/status"><i class="fas fa-tachometer-alt"></i> Status</a>
+            <a href="/lokasi"><i class="fas fa-map-marker-alt"></i> Lokasi</a>
+            <a href="/history"><i class="fas fa-history"></i> History</a>
+            <a href="/users"><i class="fas fa-users"></i> Pengguna</a>
+        </div>
+
+        <!-- Content Module -->
+        <div id="content-area" class="main-content">
+            <h2>Histori Pembuangan Sampah</h2>
+            <button class="print-button" onclick="printTable()">Print Histori</button> <!-- Print button -->
+
+            <table class="history-table" id="historyTable">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Waktu Pembuangan</th>
+                        <th>Tempat Sampah</th>
+                        <th>Kategori</th>
+                        <th>Berat (kg)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data histori akan ditambahkan di sini oleh JavaScript -->
+                </tbody>
+            </table>
+            <div class="pagination" id="pagination">
+                <!-- Pagination buttons akan ditambahkan di sini oleh JavaScript -->
+            </div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2024 Smart Trash Bin. All Rights Reserved.
+        <p>PBL TIM IOT BATAMINDO SEMESTER 3</p>
+    </footer>
+
+    <!-- Chart.js Scripts -->
+    <script>
+        const historyData = [
+            { time: "2024-10-16 10:00", bin: "Tempat Sampah 1", category: "Organik", weight: 10, status: "Terbuang" },
+            { time: "2024-10-16 10:05", bin: "Tempat Sampah 2", category: "Non-Organik", weight: 7, status: "Terbuang" },
+            { time: "2024-10-16 10:10", bin: "Tempat Sampah 1", category: "Metal", weight: 5, status: "Terbuang" },
+            { time: "2024-10-16 10:15", bin: "Tempat Sampah 2", category: "Organik", weight: 8, status: "Terbuang" },
+            { time: "2024-10-16 10:20", bin: "Tempat Sampah 1", category: "Non-Organik", weight: 6, status: "Terbuang" },
+            { time: "2024-10-16 10:25", bin: "Tempat Sampah 2", category: "Metal", weight: 4, status: "Terbuang" },
+            { time: "2024-10-16 10:30", bin: "Tempat Sampah 1", category: "Organik", weight: 12, status: "Terbuang" },
+            { time: "2024-10-16 10:35", bin: "Tempat Sampah 2", category: "Non-Organik", weight: 9, status: "Terbuang" },
+            { time: "2024-10-16 10:40", bin: "Tempat Sampah 1", category: "Metal", weight: 3, status: "Terbuang" },
+            { time: "2024-10-16 10:45", bin: "Tempat Sampah 2", category: "Organik", weight: 11, status: "Terbuang" },
+            // Tambahkan lebih banyak data jika perlu...
+        ];
+
+        let currentPage = 1;
+        const rowsPerPage = 5; // Jumlah data per halaman
+        const maxPaginationButtons = 10; // Jumlah tombol pagination maksimum yang ditampilkan
+
+        function loadTableData(page) {
+            const tableBody = document.querySelector('#historyTable tbody');
+            tableBody.innerHTML = ""; // Kosongkan tabel sebelum mengisi data
+
+            const startIndex = (page - 1) * rowsPerPage;
+            const endIndex = Math.min(startIndex + rowsPerPage, historyData.length);
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const item = historyData[i];
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${i + 1}</td>
+                    <td>${item.time}</td>
+                    <td>${item.bin}</td>
+                    <td>${item.category}</td>
+                    <td>${item.weight}</td>
+                    <td>${item.status}</td>
+                `;
+                tableBody.appendChild(row);
+            }
+
+            loadPagination(page);
+        }
+
+        function loadPagination(currentPage) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = ""; // Kosongkan pagination sebelum mengisi data
+
+            const pageCount = Math.ceil(historyData.length / rowsPerPage);
+            const startPage = Math.max(1, currentPage - Math.floor(maxPaginationButtons / 2));
+            const endPage = Math.min(pageCount, startPage + maxPaginationButtons - 1);
+
+            // Tombol "Sebelumnya"
+            if (currentPage > 1) {
+                const prevButton = document.createElement('button');
+                prevButton.innerText = "Sebelumnya";
+                prevButton.onclick = () => loadTableData(currentPage - 1);
+                pagination.appendChild(prevButton);
+            }
+
+            // Tombol halaman
+            for (let i = startPage; i <= endPage; i++) {
+                const button = document.createElement('button');
+                button.innerText = i;
+                button.onclick = () => loadTableData(i);
+                if (i === currentPage) {
+                    button.style.fontWeight = 'bold'; // Menandai halaman aktif
+                }
+                pagination.appendChild(button);
+            }
+
+            // Tombol "Selanjutnya"
+            if (currentPage < pageCount) {
+                const nextButton = document.createElement('button');
+                nextButton.innerText = "Selanjutnya";
+                nextButton.onclick = () => loadTableData(currentPage + 1);
+                pagination.appendChild(nextButton);
+            }
+        }
+
+        function printTable() {
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>Print Histori</title>');
+            printWindow.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">');
+            printWindow.document.write('<style>table { width: 100%; border-collapse: collapse; } th, td { border: 1px solid #ccc; padding: 10px; text-align: center; } th { background-color: #4caf50; color: white; }</style></head><body>');
+            printWindow.document.write('<h2>Histori Pembuangan Sampah</h2>');
+            printWindow.document.write(document.getElementById('historyTable').outerHTML);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            loadTableData(currentPage);
+
+            const organikData1 = { datasets: [{ data: [60, 40], backgroundColor: ['#4caf50', '#e0f2f1'] }] };
+            const nonOrganikData1 = { datasets: [{ data: [50, 50], backgroundColor: ['#ff9800', '#e0f2f1'] }] };
+            const metalData1 = { datasets: [{ data: [30, 70], backgroundColor: ['#9e9e9e', '#e0f2f1'] }] };
+
+            const organikData2 = { datasets: [{ data: [60, 40], backgroundColor: ['#4caf50', '#e0f2f1'] }] };
+            const nonOrganikData2 = { datasets: [{ data: [70, 30], backgroundColor: ['#ff9800', '#e0f2f1'] }] };
+            const metalData2 = { datasets: [{ data: [30, 70], backgroundColor: ['#9e9e9e', '#e0f2f1'] }] };
+
+            new Chart(document.getElementById('organikChart1'), { type: 'doughnut', data: organikData1 });
+            new Chart(document.getElementById('nonOrganikChart1'), { type: 'doughnut', data: nonOrganikData1 });
+            new Chart(document.getElementById('metalChart1'), { type: 'doughnut', data: metalData1 });
+
+            new Chart(document.getElementById('organikChart2'), { type: 'doughnut', data: organikData2 });
+            new Chart(document.getElementById('nonOrganikChart2'), { type: 'doughnut', data: nonOrganikData2 });
+            new Chart(document.getElementById('metalChart2'), { type: 'doughnut', data: metalData2 });
+        });
+    </script>
+</body>
+</html>

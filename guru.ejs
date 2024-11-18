@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Guru</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/petugas.css">
+</head>
+<body>
+
+<%- include ../partials/guru_header.ejs %>
+
+<div class="content">
+    <div class="sidebar">
+        <%- include ../partials/guru_sidebar.ejs %>
+    </div>
+    <div class="main-content">
+        <h1>Guru Dashboard</h1>
+        <div class="contents">
+            <h1>Dashboard Guru</h1>
+            
+            <div class="stats">
+                <p>Selamat datang, <%= user.username %>!</p>
+                <p>Status akun: <%= user.role %></p>
+            </div>
+        </div>
+        
+        <div class="contents">
+            <h1>Dashboard Guru</h1>
+            
+            <table class="table-trash">
+                <tr>
+                    <th width="40%">Organik</th>
+                    <td><%= sensorData.organik %> pieces</td>
+                </tr>
+                <tr>
+                    <th>Non Organik</th>
+                    <td><%= sensorData.non_organik %> pieces</td>
+                </tr>
+                <tr>
+                    <th>Metal</th>
+                    <td><%= sensorData.metal %> pieces</td>
+                </tr>
+            </table>
+    
+            <div class="task-list">
+                <h2>Tugas Kebersihan Hari Ini</h2>
+                <ul>
+                    <li><i class="fas fa-broom"></i> Menyapu area halaman utama</li>
+                    <li><i class="fas fa-trash"></i> Mengosongkan tempat sampah</li>
+                    <li><i class="fas fa-recycle"></i> Memisahkan sampah organik dan non-organik</li>
+                    <!-- Add more tasks as needed -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include ../partials/petugas_footer.ejs %>
+
+</body>
+</html>

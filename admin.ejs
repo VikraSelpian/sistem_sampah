@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Trash Bin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <% include ../partials/navbar.ejs %> <!-- Navbar -->
+
+    <div class="container">
+        <% include ../partials/sidebar.ejs %> <!-- Sidebar -->
+
+        <div id="content-area">
+            <div class="dashboard">
+                <h2>Total Trash in the Trash Bin</h2>
+                <table class="table-trash">
+                    <tr>
+                        <th>Organik</th>
+                        <td><%= sensorData.organik %> pieces</td>
+                    </tr>
+                    <tr>
+                        <th>Non Organik</th>
+                        <td><%= sensorData.non_organik %> pieces</td>
+                    </tr>
+                    <tr>
+                        <th>Metal</th>
+                        <td><%= sensorData.metal %> pieces</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <% include ../partials/footer.ejs %> <!-- Footer -->
+
+    <script>
+        function loadModule(module, event) {
+            event.preventDefault();
+            fetch("/" + module)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('content-area').innerHTML = data;
+                })
+                .catch(() => {
+                    alert('Failed to load module.');
+                });
+        }
+    </script>
+</body>
+</html>

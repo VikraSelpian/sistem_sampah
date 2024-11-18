@@ -1,0 +1,26 @@
+<nav>
+    <div class="appname">
+        <h2><span class="smart">Smart</span> <span class="trashbin">Trash Bin</span></h2>
+    </div>
+    <div>
+        <ul>
+            <li>
+                <a href="/notifikasi" id="trashNotification" class="notification" style="display: none;">
+                    <i class="fas fa-bell"></i>
+                </a>
+            </li>
+            <li>
+                <div class="user-info">
+                    <!-- Profile picture with dropdown -->
+                    <div class="profile-dropdown">
+                        <img src="/uploads/<%= user.profile_picture %>" alt="Profile Picture" class="profile-pic">
+                        <div class="dropdown-content">
+                            <a href="/petugas/settings/<%= user.id %>">Settings</a>
+                            <a href="/logout" class="logout-button">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

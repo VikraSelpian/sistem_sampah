@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan Pengguna</title>
+    <link rel="stylesheet" href="/style/cs.css">
+    <link rel="stylesheet" href="/style/settings.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Smart Trash Bin</h1>
+        <div class="user-info">
+            <!-- Profile picture with dropdown -->
+            <div class="profile-dropdown">
+                <img src="/uploads/<%= user.profile_picture %>" alt="Profile Picture" class="profile-pic">
+                <div class="dropdown-content">
+                    <a href="/settings/<%= user.id %>">Settings</a>
+                    <a href="/logout" class="logout-button">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="menu">
+            <a href="/admin"><i class="fas fa-home"></i> Halaman Utama</a>
+            <a href="/status"><i class="fas fa-tachometer-alt"></i> Status</a>
+            <a href="/lokasi"><i class="fas fa-map-marker-alt"></i> Lokasi</a>
+            <a href="/history"><i class="fas fa-history"></i> History</a>
+            <a href="/users"><i class="fas fa-users"></i> Pengguna</a>
+        </div>
+        <div id="content-area" class="main-content">
+            <h2>Settings Profile</h2>
+            <div class="settings">
+                <div class="profile-section">
+                    <img src="/uploads/<%= user.profile_picture %>" alt="Profile Picture" class="profile-pic-large">
+                    <button class="edit-pic-button" id="edit-button">Edit</button>
+                </div>
+                <h3>Info Profil</h3>
+                <form action="/settings/update" method="POST">
+                    <label>Nama:</label>
+                    <input type="text" id="username" name="username" value="<%= user.username %>" class="editable-field">
+                    
+                    <label>No. HP:</label>
+                    <input type="tel" id="no_hp" name="no_hp" value="<%= user.no_hp %>" class="editable-field">
+                    
+                    <label>Email:</label>
+                    <input type="email" id="email" name="email" value="<%= user.email %>" class="editable-field">
+
+                    <label>Alamat:</label>
+                    <textarea id="alamat" name="alamat" rows="4" class="editable-field"><%= user.alamat %></textarea>
+                    
+                    <button type="submit" id="save-button" class="save-button" disabled>Save</button>
+                    <button id="cancel-button" class="cancel-button">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p>Editing Profile Picture...</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Smart Trash Bin. All Rights Reserved.
+        <p>PBL TIM IOT BATAMINDO SEMESTER 3</p>
+    </footer>
+    <script>
+        const saveButton = document.getElementById('save-button');
+        const cancelButton = document.getElementById('cancel-button');
+        const originalValues = {
+            name: document.getElementById('username').value,
+            phone: document.getElementById('no_hp').value,
+            email: document.getElementById('email').value,
+            alamat: document.getElementById('alamat').value,
+        };
+
+        console.log(originalValues);
+
+        document.querySelectorAll('.editable-field').forEach(input => {
+            input.addEventListener('input', () => {
+                const isChanged = 
+                    document.getElementById('username').value !== originalValues.name ||
+                    document.getElementById('no_hp').value !== originalValues.phone ||
+                    document.getElementById('email').value !== originalValues.email ||
+                    document.getElementById('alamat').value !== originalValues.alamat;
+
+                saveButton.disabled = !isChanged;
+            });
+        });
+
+        cancelButton.addEventListener('click', () => {
+            window.history.back();
+        });
+
+        // Modal functionality
+        const modal = document.getElementById("modal");
+        const editButton = document.getElementById("edit-button");
+        const closeButton = document.querySelector(".close-button");
+
+        editButton.addEventListener("click", () => {
+            modal.style.display = "block";
+            document.querySelector('.profile-pic-large').classList.add('darken');
+        });
+
+        closeButton.addEventListener("click", () => {
+            modal.style.display = "none";
+            document.querySelector('.profile-pic-large').classList.remove('darken');
+        });
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                document.querySelector('.profile-pic-large').classList.remove('darken');
+            }
+        }
+    </script>
+</body>
+</html>

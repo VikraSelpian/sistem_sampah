@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Petugas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/petugas.css">
+</head>
+<body>
+
+<%- include ../partials/guru_header.ejs %>
+
+<div class="content">
+    <div class="sidebar">
+        <%- include ../partials/guru_sidebar.ejs %>
+    </div>
+    <div class="main-content">
+        <h1>Guru Lokasi</h1>
+        <div class="contents">
+            <h2>Lokasi Tempat Sampah</h2>
+            <div id="map" style="width: 100%; height: 400px;"></div> <!-- Map Element -->
+            <div class="location-table-container">
+                <h3>Daftar Lokasi</h3>
+                <table class="location-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tempat Sampah</th>
+                            <th>Alamat</th>
+                            <th>Koordinat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="locationTableBody">
+                        <!-- Data lokasi akan dimasukkan di sini melalui JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include ../partials/petugas_footer.ejs %>
+
+<!-- JavaScript untuk menampilkan map dan lokasi -->
+<script>
+    const tempatSampah = [
+        { name: "Tempat Sampah 1", address: "Jl. Engku Putri No. 1", lat: 1.138560, lng: 104.020302 },
+        { name: "Tempat Sampah 2", address: "Jl. Raden Patah No. 2", lat: 1.136024, lng: 104.027856 },
+        { name: "Tempat Sampah 3", address: "Jl. Ahmad Yani No. 3", lat: 1.141470, lng: 104.009643 },
+        { name: "Tempat Sampah 4", address: "Jl. Yos Sudarso No. 4", lat: 1.128634, lng: 104.030453 },
+        { name: "Tempat Sampah 5", address: "Jl. Nagoya No. 5", lat: 1.142579, lng: 104.010484 },
+    ];
+
+    function initMap() {
+        // Tentukan lokasi pusat peta (Batam)
+        const batam = { lat: 1.141521, lng: 104.030457 };
+
+        // Membuat peta baru di div dengan id 'map'
+        const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: batam,
+        });
+
+        // Menambahkan marker untuk setiap tempat sampah
+        tempatSampah.forEach(function (tempat, index) {
+            const marker = new google.maps.Marker({
+                position: { lat: tempat.lat, lng: tempat.lng },
+                map: map,
+                title: tempat.name
+            });
+
+            // Menambahkan info window untuk setiap marker
+            const infoWindow = new google.maps.InfoWindow({
+                content: `<h3>${tempat.name}</h3><p>${tempat.address}</p>`
+            });
+
+            // Membuka info window saat marker diklik
+            marker.addListener('click', function () {
+                infoWindow.open(map, marker);
+            });
+
+            // Menambahkan data ke tabel
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${tempat.name}</td>
+                <td>${tempat.address}</td>
+                <td>${tempat.lat}, ${tempat.lng}</td>
+            `;
+            document.getElementById('locationTableBody').appendChild(row);
+        });
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnvjKa-cUMs4SEPLYtqIMzI3NqsF6YOxk&callback=initMap" async defer></script>
+
+</body>
+</html>

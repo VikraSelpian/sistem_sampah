@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Data User</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Smart Trash Bin</h1>
+        <div class="user-info">
+            <!-- Profile picture with dropdown -->
+            <div class="profile-dropdown">
+                <img src="/uploads/<%= user.profile_picture %>" alt="Profile Picture" class="profile-pic">
+                <div class="dropdown-content">
+                    <a href="/settings/<%= user.id %>">Settings</a>
+                    <a href="/logout" class="logout-button">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <!-- Sidebar Menu -->
+        <div class="menu">
+            <a href="/admin"><i class="fas fa-home"></i> Halaman Utama</a>
+            <a href="/status"><i class="fas fa-tachometer-alt"></i> Status</a>
+            <a href="/lokasi"><i class="fas fa-map-marker-alt"></i> Lokasi</a>
+            <a href="/history"><i class="fas fa-history"></i> History</a>
+            <a href="/users"><i class="fas fa-users"></i> Pengguna</a>
+        </div>
+        
+        <!-- Content Module -->
+        <div id="content-area" class="main-content">
+            <h2>Tambah User Baru</h2>
+            <form action="/add-user" method="POST" enctype="multipart/form-data">
+                <!-- Profile Picture Upload with Preview -->
+                <div class="form-row">
+                    <div>
+                        <label for="profile_picture">Profile Picture:</label>
+                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*" onchange="previewImage(event)">
+                        <img id="profile-pic-preview" class="profile-pic-preview" src="#" alt="Profile Picture Preview" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div>
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div>
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div>
+                        <label for="no_hp">No HP:</label>
+                        <input type="tel" id="no_hp" name="no_hp" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div>
+                        <label for="alamat">Alamat:</label>
+                        <textarea id="alamat" name="alamat" rows="4" required></textarea>
+                    </div>
+                    <div>
+                        <label for="role">Role:</label>
+                        <select id="role" name="role" required>
+                            <option value="petugas">Petugas Kebersihan</option>
+                            <option value="admin">Admin</option>
+                            <option value="guru">Guru</option>
+                        </select><br><br>
+                    </div>
+                </div>
+
+                <button type="submit">Simpan</button>
+            </form>
+        </div>
+    </div>
+    <footer>
+        &copy; 2024 Smart Trash Bin. All Rights Reserved.
+    </footer>
+
+    <script>
+        // JavaScript to preview the selected image
+        function previewImage(event) {
+            const preview = document.getElementById('profile-pic-preview');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block'; // Show the preview image
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>

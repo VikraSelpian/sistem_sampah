@@ -1,0 +1,474 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&family=Anek:wght@400&display=swap');
+
+/* Reset some default styling for consistency */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f6f8;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, Arial, sans-serif;
+}
+
+/* Navbar styling */
+nav {
+    background-color: #2e8b57;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem;
+    position: fixed; /* Make navbar fixed */
+    top: 0; /* Align it to the top of the viewport */
+    left: 0; /* Align it to the left of the viewport */
+    right: 0; /* Make it stretch across the full width */
+    z-index: 1;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li {
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: background 0.3s ease;
+}
+
+nav ul li a.active {
+    background-color: #4caf50; /* Same hover color for consistency */
+    color: #ffffff; /* Ensures the text is readable */
+    border-radius: 5px; /* Same rounded effect */
+    font-weight: 600; /* Optional: make active link bolder */
+}
+
+nav ul li:not(:last-child) a:hover {
+    background-color: #12a50a;
+    border-radius: 5px;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Profile dropdown styling */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show dropdown on hover or click */
+.profile-dropdown:hover .dropdown-content,
+.profile-dropdown:focus-within .dropdown-content {
+    display: block;
+}
+
+
+.logout-button {
+    color: white;
+    text-decoration: none;
+    background-color: #fb4040;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.logout-button:hover {
+    background-color: #e60000; /* Warna saat hover */
+}
+
+/* Sidebar styling */
+.sidebar {
+    background: linear-gradient(
+        to bottom, 
+        #2e8b57 8%, 
+        #4caf50 15%, 
+        #4caf50 50%,
+        #4caf50 80%, 
+        #2e8b57 95% 
+    ); 
+    color: #ffffff;
+    width: 250px;
+    min-height: 100vh;
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column; /* Allows vertical stacking of items */
+    align-items: center; /* Centers the content horizontally */
+    z-index: 2;
+}
+
+
+.sidebar h2 {
+    margin-bottom: 3.3rem; /* Increased margin for more space */
+    font-size: 1.3rem; /* Increased font size for better visibility */
+    color: #f8f9fa;
+    text-align: center; /* Centers the heading text */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0; /* Removes default padding */
+    margin: 0; /* Removes default margin */
+    width: 100%; /* Full width for the list */
+}
+
+.sidebar ul li {
+    width: 100%; /* Makes each list item take full width */
+    margin-bottom: 15px; /* Adds 10px space below each list item */
+}
+
+.sidebar ul li a {
+    color: #e4e4e4;
+    background-color: #388e3c;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 1rem; /* Increased padding for more clickable area */
+    border-radius: 5px;
+    transition: background 0.3s ease, color 0.3s ease;
+    justify-content: center; /* Centers text within each link */
+}
+
+.sidebar ul li a.active {
+    background-color: #f5fcf5; /* Same hover color for consistency */
+    color: #1b3d14; /* Ensures the text is readable */
+    border-radius: 5px; /* Same rounded effect */
+    font-weight: 600; /* Optional: make active link bolder */
+}
+
+.sidebar ul li a i {
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.sidebar ul li a:hover {
+    background-color: #66bb6a;
+    color: #ffffff;
+}
+
+.smart {
+    font-family: 'Roboto', sans-serif; /* Roboto font for "smart" */
+    font-weight: bold; /* Bold weight */
+    letter-spacing: 1px; /* Spacing for a connected feel */
+    color: #c5c5c5; /* Text color */
+    text-shadow: 3px 2px 5px rgba(0, 0, 0, 0.5), /* Dark shadow */
+                 -3px -1px 5px rgba(0, 0, 0, 0.5); /* Light shadow for depth */
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.7); /* Stroke effect */
+}
+
+.trashbin {
+    font-family: 'Anek', sans-serif; /* Anek font for "TRASH BIN" */
+    font-weight: 400; /* Regular weight */
+    color: #ffffff; /* Text color */
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7), /* Dark shadow */
+                 -4px -4px 5px rgba(0, 138, 7, 0.7); /* Light shadow for depth */
+}
+
+/* Content layout */
+.content {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    margin: 62.5px 0px 50px 250px;
+}
+
+.contents {
+    flex-grow: 1;
+    background-color: #ffffff;
+    padding: 2rem;
+    margin: 25px 0 25px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Styles */
+.location-table-container {
+    margin-top: 20px;
+}
+
+/* Header for dashboard */
+.contents h1 {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.stats {
+    background-color: #e9ecef;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    color: #495057;
+}
+
+.task-list h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #495057;
+}
+
+.task-list ul {
+    list-style: none;
+}
+
+.task-list li {
+    font-size: 1rem;
+    color: #6c757d;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.task-list li i {
+    color: #007bff;
+    margin-right: 0.5rem;
+}
+
+/* Footer styling */
+footer {
+    background-color: #2e8b57;
+    color: #ffffff;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    position: fixed;
+    width: calc(100% - 250px);
+    bottom: 0;
+    left: 250px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .content {
+        flex-direction: column;
+        margin-left: 0;
+    }
+
+    footer {
+        width: 100%;
+        left: 0;
+    }
+}
+
+/*TABLE TRASH STYLING*/
+.table-trash {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.table-trash th, .table-trash td {
+    padding: 12px 15px;
+    border: 1px solid #dee2e6; /* Light gray border */
+}
+
+.table-trash th {
+    background-color: #66bb6a; /* Light background for headers */
+    color: #ffffff; /* Dark text color for headers */
+}
+
+.table-trash tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light gray background for even rows */
+}
+
+.table-trash tr:hover {
+    background-color: #e2e6ea; /* Light gray background on hover */
+}
+
+.table-trash td {
+    background-color: #ffffff; /* White background for data cells */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .table-trash {
+        font-size: 0.9rem; /* Slightly smaller text on smaller screens */
+    }
+    .table-trash th, .table-trash td {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+}
+
+/* Basic table styling */
+.location-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.location-table thead {
+    background-color: #4CAF50;
+    color: white;
+    text-align: left;
+    font-weight: bold;
+}
+
+.location-table th,
+.location-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+/* Hover effect */
+.location-table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.location-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.location-table tbody tr:hover {
+    background-color: #e8f5e9;
+}
+
+/* Zebra striping */
+.location-table tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Header styling */
+.location-table thead th {
+    border-bottom: 2px solid #ddd;
+}
+
+/* Responsive styling */
+@media screen and (max-width: 768px) {
+    .location-table thead {
+        display: none;
+    }
+
+    .location-table tbody tr {
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    .location-table tbody td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .location-table tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: flex-end; /* Aligns to the right */
+    margin-top: 20px;
+    gap: 5px; /* Adds consistent spacing between buttons */
+}
+
+.pagination button {
+    background-color: #4CAF50;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #388E3C;
+}
+
+.pagination button:disabled {
+    background-color: #A5D6A7;
+    cursor: not-allowed;
+}
+
+/* Print Button */
+.print-button {
+    background-color: #4CAF50;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    float: right;
+    transition: background-color 0.3s ease;
+}
+
+.print-button:hover {
+    background-color: #388E3C;
+}
+
+.print-button:active {
+    background-color: #2E7D32;
+}
+
+.print-button:focus {
+    outline: 3px solid #81C784;
+}
+
